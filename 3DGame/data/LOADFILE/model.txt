@@ -1,0 +1,145 @@
+//=============================================================================
+//
+//		スクリプトファイル	[model.txt]
+//		Author : OGASAWARA HYUGA
+//
+//=============================================================================
+SCRIPT
+
+#------------------------------------------------------------------------------
+# モデル数
+#------------------------------------------------------------------------------
+NUM_MODEL = 15
+
+#------------------------------------------------------------------------------
+# モデルファイル名
+#------------------------------------------------------------------------------
+MODEL_FILENAME = data/MODEL/PLAYER/00_body.x		# [0]体
+MODEL_FILENAME = data/MODEL/PLAYER/01_head.x	    # [1]頭
+MODEL_FILENAME = data/MODEL/PLAYER/02_waist.x		# [2]腰
+MODEL_FILENAME = data/MODEL/PLAYER/03_UparmR.x		# [3]右上腕
+MODEL_FILENAME = data/MODEL/PLAYER/04_forearmR.x	# [4]右腕
+MODEL_FILENAME = data/MODEL/PLAYER/05_handR.x		# [5]右手
+MODEL_FILENAME = data/MODEL/PLAYER/06_UparmL.x		# [6]左上腕
+MODEL_FILENAME = data/MODEL/PLAYER/07_forearmL.x	# [7]左腕
+MODEL_FILENAME = data/MODEL/PLAYER/08_handL.x		# [8]左手
+MODEL_FILENAME = data/MODEL/PLAYER/09_UpthighR.x	# [9]右上腿
+MODEL_FILENAME = data/MODEL/PLAYER/10_LowthighR.x	# [10]右下腿
+MODEL_FILENAME = data/MODEL/PLAYER/11_footR.x		# [11]右足
+MODEL_FILENAME = data/MODEL/PLAYER/12_UpthighL.x	# [12]左上腿
+MODEL_FILENAME = data/MODEL/PLAYER/13_LowthighL.x	# [13]左下腿
+MODEL_FILENAME = data/MODEL/PLAYER/14_footL.x		# [14]左足
+
+#------------------------------------------------------------------------------
+# キャラクター情報
+#------------------------------------------------------------------------------
+CHARACTERSET
+	NUM_PARTS = 15					# パーツ数
+
+	PARTSSET						# [0]体
+		INDEX = 0
+		PARENT = -1					# (親)NULL
+		POS = 0.0 49.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [1]頭
+		INDEX = 1
+		PARENT = 0					# (親)体
+		POS = 0.0 20.5 -1.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [2]腰
+		INDEX = 2
+		PARENT = 0					# (親)体
+		POS = 0.0 -1.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [3]右上腕
+		INDEX = 3
+		PARENT = 0					# (親)体
+		POS = 10.0 18.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [4]右腕
+		INDEX = 4
+		PARENT = 3					# (親)右上腕
+		POS = 18.0 0.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [5]右手
+		INDEX = 5
+		PARENT = 4					# (親)右腕
+		POS = 18.0 0.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [6]左上腕
+		INDEX = 6
+		PARENT = 0					# (親)体
+		POS = -10.0 18.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [7]左腕
+		INDEX = 7
+		PARENT = 6					# (親)左上腕
+		POS = -18.0 0.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [8]左手
+		INDEX = 8
+		PARENT = 7					# (親)左腕
+		POS = -18.0 0.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+
+	PARTSSET						# [9]右上腿
+		INDEX = 9
+		PARENT = 2					# (親)腰
+		POS = 5.0 -8.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET						# [10]右腿
+		INDEX = 10
+		PARENT = 9					# (親)右上腿
+		POS = 0.0 -20.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET						# [11]右腿
+		INDEX = 11
+		PARENT = 10					# (親)右足
+		POS = 0.0 -17.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET						# [12]左上腿
+		INDEX = 12
+		PARENT = 2					# (親)腰
+		POS = -5.0 -8.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET						# [13]左腿
+		INDEX = 13
+		PARENT = 12					# (親)左上腿
+		POS = 0.0 -20.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+	
+	PARTSSET						# [14]左足
+		INDEX = 14
+		PARENT = 13					# (親)左腿
+		POS = 0.0 -17.0 0.0
+		ROT = 0.0 0.0 0.0
+	END_PARTSSET
+END_CHARACTERSET
+
+END_SCRIPT
