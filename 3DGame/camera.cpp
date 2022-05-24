@@ -71,7 +71,7 @@ void CCamera::Update(void)
 
 	//KeyboardControl(pKeyboard);	// キーボード操作
 
-	MouseControl(pMouse);			// マウス操作
+	//MouseControl(pMouse);			// マウス操作
 
 	//GamePadXControl(pXinputPad);		// ゲームパッド操作
 

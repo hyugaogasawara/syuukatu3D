@@ -47,10 +47,10 @@ public:
 	D3DXVECTOR3 GetSize(void) { return m_size; }			// パーツの大きさ
 
 	// 設定処理
-	void SetModelFile(const char *pModelFileName) { m_pModelFileName = pModelFileName; }	// モデルファイル名
 	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }		// パーツの位置
 	void SetRotation(D3DXVECTOR3 rot) { m_rot = rot; }		// パーツの向き
 	void SetModelType(int nType) { m_nModelType = nType; }	// モデルの種類
+
 	bool Collision(void);	// 当たり判定
 private:
 	LPDIRECT3DTEXTURE9	m_pTexture[MODEL_TEX];	// テクスチャのポインタ
@@ -63,12 +63,11 @@ private:
 	D3DXVECTOR3			m_rot;					// 向き
 	D3DXVECTOR3			m_size;					// 大きさ
 	D3DXVECTOR3			m_vtxMin, m_vtxMax;		// 頂点の最小値、最大値
-	const char			*m_pModelFileName;		// モデルファイル名
-	CXload				*m_pXload;				// Xファイルの情報
-	int					m_nModelType;
 	D3DXVECTOR3			m_vtx[MODEL_VTX];		// 頂点のローカル座標
 	D3DXMATRIX			m_aMtxWorld[MODEL_VTX];	// 8頂点分のワールドマトリックス
 	D3DXVECTOR3			m_aSaveMtxWorld[MODEL_VTX];	// 頂点のワールドマトリックス保存
+	CXload				*m_pXload;				// Xファイルの情報
+	int					m_nModelType;			// モデルの種類
 
 };
 #endif //!_MODELSINGLE_H_

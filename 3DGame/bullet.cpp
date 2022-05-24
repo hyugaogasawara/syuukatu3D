@@ -76,15 +76,17 @@ void CBullet::Update(void)
 	// 0ˆÈ‰º‚Åíœ
 	if (m_nLife <= 0)
 	{
-		m_bUninit = true;
+		Uninit();
+		return;
 	}
 
 	// ˆÊ’u‚ğİ’è
+	CScene::SetPosition(pos);
 	CBillboard::SetPosition(pos);
 	CBillboard::Update();
 
 	// ”jŠü
-	if (m_bUninit == true)
+	if (m_bUninit)
 	{
 		Uninit();
 	}

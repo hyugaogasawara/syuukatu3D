@@ -59,13 +59,13 @@ HRESULT CGame::Init(void)
 	m_pMeshSphere = CMeshSphere::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1000.0f, 12, 3, 2);
 
 	// プレイヤー
-	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+	//m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 
 	// モデル
-	m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(0.0f, 100.0f, 20.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
+	m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(0.0f, 100.0f, 100.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
 
 	// 照準
-	//m_pSight = CSight::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 4);
+	m_pSight = CSight::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 4);
 
 	return S_OK;
 }

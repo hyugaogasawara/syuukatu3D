@@ -29,12 +29,15 @@ public:
 
 	static CBullet *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR3 move, int nLife, int nType);
 
+	// İ’èˆ—
+	void SetUninit(bool bUninit) { m_bUninit = bUninit; }
+
 private:
 	D3DXVECTOR3	m_pos;		// ˆÊ’u
 	D3DXVECTOR3	m_rot;		// Œü‚«
 	D3DXVECTOR3	m_size;		// ‘å‚«‚³
 	D3DXVECTOR3	m_move;		// ˆÚ“®—Ê
 	int			m_nLife;	// õ–½
-	bool		m_bUninit;
+	bool		m_bUninit;	// I—¹ˆ—”»’è
 };
 #endif //!_BULLET_H_

@@ -114,40 +114,41 @@ HRESULT CModelSingle::Init(void)
 		{
 			m_vtxMin.z = vtx.z;
 		}
-		// 最大値と最小値を引いた値がモデルの大きさ
-		m_size.x = m_vtxMax.x - m_vtxMin.x;
-		m_size.y = m_vtxMax.y - m_vtxMin.y;
-		m_size.z = m_vtxMax.z - m_vtxMin.z;
-
 		// 頂点フォーマットのサイズ分ポインタを進める
 		pVtxBuff += sizeFVF;
 	}
+	// 最大値と最小値を引いた値がモデルの大きさ
+	m_size.x = m_vtxMax.x - m_vtxMin.x;
+	m_size.y = m_vtxMax.y - m_vtxMin.y;
+	m_size.z = m_vtxMax.z - m_vtxMin.z;
 
 	// 頂点設定
+	// 正面の頂点
 	m_vtx[0].x = m_vtxMin.x;
-	m_vtx[0].z = m_vtxMax.z;
 	m_vtx[0].y = m_vtxMax.y;
+	m_vtx[0].z = m_vtxMin.z;
 	m_vtx[1].x = m_vtxMax.x;
-	m_vtx[1].z = m_vtxMax.z;
 	m_vtx[1].y = m_vtxMax.y;
+	m_vtx[1].z = m_vtxMin.z;
 	m_vtx[2].x = m_vtxMin.x;
-	m_vtx[2].z = m_vtxMax.z;
 	m_vtx[2].y = m_vtxMin.y;
+	m_vtx[2].z = m_vtxMin.z;
 	m_vtx[3].x = m_vtxMax.x;
-	m_vtx[3].z = m_vtxMax.z;
 	m_vtx[3].y = m_vtxMin.y;
+	m_vtx[3].z = m_vtxMin.z;
+	// 背面の頂点
 	m_vtx[4].x = m_vtxMin.x;
-	m_vtx[4].z = m_vtxMin.z;
 	m_vtx[4].y = m_vtxMax.y;
+	m_vtx[4].z = m_vtxMax.z;
 	m_vtx[5].x = m_vtxMax.x;
-	m_vtx[5].z = m_vtxMin.z;
 	m_vtx[5].y = m_vtxMax.y;
+	m_vtx[5].z = m_vtxMax.z;
 	m_vtx[6].x = m_vtxMin.x;
-	m_vtx[6].z = m_vtxMin.z;
 	m_vtx[6].y = m_vtxMin.y;
+	m_vtx[6].z = m_vtxMax.z;
 	m_vtx[7].x = m_vtxMax.x;
-	m_vtx[7].z = m_vtxMin.z;
 	m_vtx[7].y = m_vtxMin.y;
+	m_vtx[7].z = m_vtxMax.z;
 
 	// 頂点バッファをアンロック
 	m_pMesh->UnlockVertexBuffer();
@@ -160,27 +161,30 @@ HRESULT CModelSingle::Init(void)
 //=============================================================================
 void CModelSingle::Uninit(void)
 {
-	// メッシュの破棄
-	if (m_pMesh != NULL)
-	{
-		m_pMesh->Release();
-		m_pMesh = NULL;
-	}
+
 	// マテリアルの破棄
 	if (m_pBuffMat != NULL)
 	{
 		m_pBuffMat->Release();
 		m_pBuffMat = NULL;
 	}
-	// テクスチャの破棄
-	for (int nCntTex = 0; nCntTex < MODEL_TEX; nCntTex++)
+
+	// メッシュの破棄
+	if (m_pMesh != NULL)
 	{
-		if (m_pTexture[nCntTex] != NULL)
-		{
-			m_pTexture[nCntTex]->Release();
-			m_pTexture[nCntTex] = NULL;
-		}
+		m_pMesh->Release();
+		m_pMesh = NULL;
 	}
+
+	// テクスチャの破棄
+	//for (int nCntTex = 0; nCntTex < MODEL_TEX; nCntTex++)
+	//{
+	//	if (m_pTexture[nCntTex] != NULL)
+	//	{
+	//		m_pTexture[nCntTex]->Release();
+	//		m_pTexture[nCntTex] = NULL;
+	//	}
+	//}
 }
 
 //=============================================================================
@@ -188,7 +192,7 @@ void CModelSingle::Uninit(void)
 //=============================================================================
 void CModelSingle::Update(void)
 {
-
+	CModelSingle::Collision();
 }
 
 //=============================================================================
@@ -246,24 +250,38 @@ void CModelSingle::Draw(void)
 		// 保存していたマテリアルを戻す
 		pDevice->SetMaterial(&matDef);
 	}
+
+	D3DXMATRIX vtxTrans,vtxParent;
+
+	// 8頂点分のワールド座標を保存
 	for (int nCnt = 0; nCnt < MODEL_VTX; nCnt++)
 	{
 		// ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&m_aMtxWorld[nCnt]);
 
 		// 位置を反映
-		D3DXMatrixTranslation(&mtxTrans, m_vtx[nCnt].x, m_vtx[nCnt].y, m_vtx[nCnt].z);
+		D3DXMatrixTranslation(&vtxTrans, m_vtx[nCnt].x, m_vtx[nCnt].y, m_vtx[nCnt].z);
+		D3DXMatrixMultiply(&m_aMtxWorld[nCnt], &m_aMtxWorld[nCnt], &vtxTrans);
+
+		if (m_mtxWorld)
+		{
+			vtxParent = m_mtxWorld;
+		}
+		else
+		{
+			pDevice->GetTransform(D3DTS_WORLD, &vtxParent);
+		}
 
 		// 親子関係を掛け合わせる
-		D3DXMatrixMultiply(&m_aMtxWorld[nCnt], &m_aMtxWorld[nCnt], &m_mtxWorld);
+		D3DXMatrixMultiply(&m_aMtxWorld[nCnt], &vtxParent, &m_aMtxWorld[nCnt]);
 
 		// 各パーツのワールドマトリックスの設定
 		pDevice->SetTransform(D3DTS_WORLD, &m_aMtxWorld[nCnt]);
 
 		// ワールド座標を保存
 		m_aSaveMtxWorld[nCnt].x = m_aMtxWorld[nCnt]._41;
-		m_aSaveMtxWorld[nCnt].y = m_aMtxWorld[nCnt]._41;
-		m_aSaveMtxWorld[nCnt].z = m_aMtxWorld[nCnt]._41;
+		m_aSaveMtxWorld[nCnt].y = m_aMtxWorld[nCnt]._42;
+		m_aSaveMtxWorld[nCnt].z = m_aMtxWorld[nCnt]._43;
 	}
 }
 //=============================================================================
@@ -292,54 +310,83 @@ CModelSingle *CModelSingle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType)
 bool CModelSingle::Collision(void)
 {
 	// オブジェクト情報初期化
-	CScene *pScene = nullptr;
+	CScene *pThisObj = nullptr;
 	CScene *pSaveObj = nullptr;
 
 	// 先頭オブジェクトの優先順位を取得
-	pScene = pScene->GetTopObj(PRIORITY_BULLET);
+	pThisObj = pThisObj->GetTopObj(PRIORITY_BULLET);
 
-	while (pScene != nullptr)
+	while (pThisObj)
 	{
-		//	オブジェクトの情報保存
-		pSaveObj = pScene;
+		// 現在のオブジェクトの情報保存
+		pSaveObj = pThisObj;
 
 		// オブジェクトの種類を取得
-		if (pScene->GetObjType() == OBJTYPE_BULLET)
+		if (pThisObj->GetObjType() == OBJTYPE_BULLET)
 		{
 			// 変数初期化
-			CBullet *pBullet = nullptr;
 			D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 			// 位置を取得
-			pos = pBullet->GetPosition();
+			pos = pThisObj->GetPosition();
 
-			// ベクトルを算出
-			D3DXVECTOR3 vec[4];
-			vec[0] = pos - m_vtx[0];
-			vec[1] = pos - m_vtx[1];
-			vec[2] = pos - m_vtx[2];
-			vec[3] = pos - m_vtx[3];
+			// 4頂点からモデルに向かって伸びるベクトルを算出
+			D3DXVECTOR3 vec[MODEL_SURFACE_VTX];
+			vec[0] = m_aSaveMtxWorld[0] - pos;
+			vec[1] = m_aSaveMtxWorld[1] - pos;
+			vec[2] = m_aSaveMtxWorld[2] - pos;
+			vec[3] = m_aSaveMtxWorld[3] - pos;
 
 			// 辺のベクトルを算出
-			D3DXVECTOR3 vec2[4];
-			vec2[0] = vec[1] - vec[0];
-			vec2[1] = vec[2] - vec[1];
-			vec2[2] = vec[3] - vec[2];
-			vec2[3] - vec[0] - vec[3];
+			D3DXVECTOR3 vec2[MODEL_SURFACE_VTX];
+			vec2[0] = m_aSaveMtxWorld[1] - m_aSaveMtxWorld[0];
+			vec2[1] = m_aSaveMtxWorld[3] - m_aSaveMtxWorld[1];
+			vec2[2] = m_aSaveMtxWorld[2] - m_aSaveMtxWorld[3];
+			vec2[3] = m_aSaveMtxWorld[0] - m_aSaveMtxWorld[2];
 
-			D3DXVECTOR3 vecCross[4];
+			// 外積を求める
+			float vecCross[MODEL_SURFACE_VTX];
+			vecCross[0] = (vec[0].x * vec2[0].y) - (vec2[0].x * vec[0].y);
+			vecCross[1] = (vec[1].x * vec2[1].y) - (vec2[1].x * vec[1].y);
+			vecCross[2] = (vec[3].x * vec2[2].y) - (vec2[2].x * vec[3].y);
+			vecCross[3] = (vec[2].x * vec2[3].y) - (vec2[3].x * vec[2].y);
 
 
+			// 範囲内の判定
+			if (vecCross[0] < 0.0f && vecCross[1] < 0.0f && vecCross[2] < 0.0f && vecCross[3] < 0.0f)
+			{
+				// 法線を求める
+				D3DXVECTOR3 Normal;
+				D3DXVECTOR3 vec1_3D;
+				D3DXVECTOR3 vec2_3D;
+				vec1_3D = vec2[1] - vec2[0];
+				vec2_3D = vec2[2] - vec2[0];
 
+				// 法線の計算(外積)
+				D3DXVec3Cross(&Normal, &vec1_3D, &vec2_3D);
 
-			// 位置を取得
-			pos = pBullet->GetPosition();
+				// 正規化
+				D3DXVec3Normalize(&Normal, &Normal);
+
+				// 内積
+				float fVecDot;
+				fVecDot = -D3DXVec3Dot(&Normal, &vec[0]);
+
+				// 求めた値が鋭角(90 ～ 180°)の場合はマイナス
+				if (fVecDot < 0.0f)
+				{
+					// 当たり判定
+					//CBullet *pBullet;
+					//pBullet = (CBullet*)pThisObj;
+					//pBullet->SetUninit(true);
+					this->Uninit();
+					return true;
+				}
+			}
 
 		}
 		// 次のオブジェクトを取得
-		pScene = pSaveObj->GetNextObj(pScene);
+		pThisObj = pSaveObj->GetNextObj(pThisObj);
 	}
-
-
 	return false;
 }
