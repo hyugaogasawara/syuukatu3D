@@ -315,10 +315,10 @@ bool CModelSingle::Collision(void)
 
 			// ベクトルを算出
 			D3DXVECTOR3 vec[4];
-			vec[0] = pos - m_vtxPos[0];
-			vec[1] = pos - m_vtxPos[1];
-			vec[2] = pos - m_vtxPos[2];
-			vec[3] = pos - m_vtxPos[3];
+			vec[0] = pos - m_vtx[0];
+			vec[1] = pos - m_vtx[1];
+			vec[2] = pos - m_vtx[2];
+			vec[3] = pos - m_vtx[3];
 
 			// 辺のベクトルを算出
 			D3DXVECTOR3 vec2[4];
