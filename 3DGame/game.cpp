@@ -9,6 +9,7 @@
 //=============================================================================
 #include "game.h"
 #include "keyboard.h"
+#include "fade.h"
 #include "meshfield.h"
 #include "meshwall.h"
 #include "meshcylinder.h"
@@ -47,7 +48,7 @@ CGame::~CGame()
 HRESULT CGame::Init(void)
 {
 	// 床
-	m_pMeshField = CMeshField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(1000.0f, 0.0f, 1000.0f), 5, 5, 0);
+	m_pMeshField = CMeshField::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(500.0f, 0.0f, 500.0f), 2, 2, 0);
 
 	// 壁
 	//CMeshWall::Create(D3DXVECTOR3(0.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f), 5, 5, 0);
@@ -62,7 +63,7 @@ HRESULT CGame::Init(void)
 	//m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 
 	// モデル
-	m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(0.0f, 100.0f, 100.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
+	m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(0.0f, 100.0f, 30.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
 
 	// 照準
 	m_pSight = CSight::Create(D3DXVECTOR3(0.0f, 100.0f, 0.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 4);
@@ -74,6 +75,12 @@ HRESULT CGame::Init(void)
 //=============================================================================
 void CGame::Uninit(void)
 {
+	if (m_pMeshField != NULL)
+	{
+		m_pMeshField->Uninit();
+		m_pMeshField = nullptr;
+	}
+
 	// オブジェクトの開放
 	Release();
 }
@@ -83,13 +90,22 @@ void CGame::Uninit(void)
 void CGame::Update(void)
 {
 	// フェードの取得
-	//CFade *pFade = CManager::GetFade();
+	CFade *pFade = CManager::GetFade();
 
 	// エフェクト
 	//if (CManager::GetInputKeyboard()->GetTrigger(DIK_RETURN) == true)
 	//{
 	//	CEffect::Create(50.0f, 50.0f, 50.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(255, 255, 255, 255), D3DXCOLOR(0, 0, 0, 0), 120, 3);
 	//}
+
+	if (pFade->GetFade() == CFade::FADE_NONE)
+	{
+		if (CManager::GetInputKeyboard()->GetTrigger(DIK_SPACE) == true)
+		{
+			pFade->SetFade(CManager::MODE_TITLE);
+		}
+	}
+
 }
 //=============================================================================
 // 描画処理

@@ -165,8 +165,8 @@ CMeshWall *CMeshWall::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size,
 		pMeshWall->m_nWidth = nWidth;	// 幅
 		pMeshWall->m_nHeight = nHeight;	// 高さ
 		pMeshWall->SetNumVtx((nWidth + 1) * (nHeight + 1));	// 頂点数
-		pMeshWall->SetNumIdx(((nWidth + 1) * 2) * nHeight + (nHeight - 1) * 2);			// インデックス数：((幅 + 1) * 2) * 高さ + (高さ - 1) * 2
-		pMeshWall->SetNumPrimitive(((nWidth + 1) * 2) * nHeight + (nHeight - 1) * 2);	// プリミティブ(三角形の面)数
+		pMeshWall->SetNumIdx(((nWidth + 1) * 2) * nHeight + (nHeight - 1) * 4);			// インデックス数：((幅 + 1) * 2) * 高さ + (高さ - 1) * 2
+		pMeshWall->SetNumPrimitive(((nWidth + 1) * 2) * nHeight + (nHeight - 1) * 4);	// プリミティブ(三角形の面)数
 		pMeshWall->Init();				// 初期化処理
 	}
 

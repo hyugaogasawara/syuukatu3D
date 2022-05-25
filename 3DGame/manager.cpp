@@ -14,7 +14,7 @@
 //#include "sound.h"
 //#include "loadData.h"
 //
-//#include "title.h"
+#include "title.h"
 //#include "menu.h"
 //#include "tutorial.h"
 //#include "select.h"
@@ -56,7 +56,7 @@ CXload			*CManager::m_pXload = NULL;
 CLoadData		*CManager::m_pLoadData = NULL;
 CCamera			*CManager::m_pCamera = NULL;
 CLight			*CManager::m_apLight[MAX_LIGHT] = {};
-CManager::MODE	CManager::m_mode = MODE_GAME;
+CManager::MODE	CManager::m_mode = MODE_TITLE;
 
 //=============================================================================
 // デフォルトコンストラクタ
@@ -165,8 +165,6 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		}
 	}
 
-	SetMode(m_mode);
-
 	// フェードの生成
 	m_pFade = CFade::Create(m_mode);
 
@@ -181,15 +179,6 @@ void CManager::Uninit(void)
 	// 全てのオブジェクトクラスを破棄
 	CScene::ReleaseAll();
 
-	// レンダラー情報破棄
-	if (m_pRenderer != NULL)
-	{
-		m_pRenderer->Uninit();
-
-		// レンダラーの開放
-		delete m_pRenderer;
-		m_pRenderer = NULL;
-	}
 	// キーボード情報破棄
 	if (m_pKeyboard != NULL)
 	{
@@ -247,17 +236,6 @@ void CManager::Uninit(void)
 			m_apLight[nCntLight] = NULL;
 		}
 	}
-#if 0
-	// 読み込みデータ情報破棄
-	if (m_pLoadData != NULL)
-	{
-		m_pLoadData->Uninit();
-
-		// 読み込みデータの開放
-		delete m_pLoadData;
-		m_pLoadData = NULL;
-	}
-#endif // 読み込みクラス
 	// テクスチャ情報破棄
 	if (m_pTexture != NULL)
 	{
@@ -277,6 +255,15 @@ void CManager::Uninit(void)
 		m_pXload = NULL;
 	}
 
+	// レンダラー情報破棄
+	if (m_pRenderer != NULL)
+	{
+		m_pRenderer->Uninit();
+
+		// レンダラーの開放
+		delete m_pRenderer;
+		m_pRenderer = NULL;
+	}
 
 }
 
@@ -320,10 +307,10 @@ void CManager::Update(void)
 //=============================================================================
 void CManager::Draw(void)
 {
-
+	// レンダラーの描画処理
 	if (m_pRenderer != NULL)
 	{
-		m_pRenderer->Draw();	// レンダラーの描画処理
+		m_pRenderer->Draw();	
 	}
 
 }
@@ -335,18 +322,16 @@ void CManager::SetMode(CManager::MODE mode)
 	switch (m_mode)
 	{
 	case MODE_TITLE:
-		//if (m_pTitle != NULL)
-		//{
-		//	m_pTitle->Uninit();
-		//	delete m_pTitle;
-		//	m_pTitle = NULL;
-		//}
+		if (m_pTitle != NULL)
+		{
+			m_pTitle->Uninit();
+			m_pTitle = NULL;
+		}
 		break;
 	case MODE_MENU:
 		//if (m_pMenu != NULL)
 		//{
 		//	m_pMenu->Uninit();
-		//	delete m_pMenu;
 		//	m_pMenu = NULL;
 		//}
 		break;
@@ -361,7 +346,6 @@ void CManager::SetMode(CManager::MODE mode)
 		//if (m_pSelect != NULL)
 		//{
 		//	m_pSelect->Uninit();
-		//	delete m_pSelect;
 		//	m_pSelect = NULL;
 		//}
 		break;
@@ -380,7 +364,6 @@ void CManager::SetMode(CManager::MODE mode)
 			}
 
 			m_pGame->Uninit();
-			delete m_pGame;
 			m_pGame = NULL;
 		}
 		break;
@@ -402,7 +385,7 @@ void CManager::SetMode(CManager::MODE mode)
 	switch (mode)
 	{
 	case MODE_TITLE:
-		//m_pTitle = CTitle::Create();
+		m_pTitle = CTitle::Create();
 		break;
 	case MODE_MENU:
 		//m_pMenu = CMenu::Create();
@@ -415,14 +398,19 @@ void CManager::SetMode(CManager::MODE mode)
 		break;
 	case MODE_GAME:
 		// カメラの生成
+		if (!m_pCamera)
+		{
 			m_pCamera = CCamera::Create();
-
+		}
 		// ライティングの生成
 		m_apLight[0] = CLight::Create(D3DXVECTOR3(0.2f, -0.8f, 0.4f), D3DXVECTOR3(400.0f, 800.0f, -400.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_apLight[1] = CLight::Create(D3DXVECTOR3(-0.2f, 0.8f, -0.4f), D3DXVECTOR3(-100.0f, 0.0f, 100.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
 		m_apLight[2] = CLight::Create(D3DXVECTOR3(0.9f, -0.1f, 0.4f), D3DXVECTOR3(100.0f, 0.0f, -200.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 2);
 
-		m_pGame = CGame::Create();
+		if (!m_pGame)
+		{
+			m_pGame = CGame::Create();
+		}
 		break;
 	case MODE_RESULT:
 		//m_pResult = CResult::Create();

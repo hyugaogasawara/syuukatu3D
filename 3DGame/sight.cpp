@@ -92,13 +92,6 @@ void CSight::Update(void)
 		//CEffect::Create(m_pos.x, m_pos.y, -20.0f, D3DXVECTOR3(3.5f, 3.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 5.0f), D3DXCOLOR(255, 255, 255, 255), D3DXCOLOR(0, 0, 0, 0), 120, 3);
 		m_pBullet = CBullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, -20.0f), D3DXVECTOR3(3.5f, 3.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 5.0f), 120, 1);
 
-		//CModelSingle *pModelSingle = CGame::GetModelSingle();
-
-		//if (pModelSingle->Collision(m_pBullet) == true)
-		//{
-
-		//}
-
 	}
 
 	// ˆÊ’u‚ğİ’è

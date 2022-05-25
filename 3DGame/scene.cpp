@@ -20,23 +20,23 @@ CScene *CScene::m_pCur[PRIORITY_MAX] = {};	// 現在(最後尾)のオブジェクト
 //=============================================================================
 CScene::CScene(int nPriority)
 {
-	m_nPriority = nPriority;	// 描画の優先順位を設定
-
 	// 先頭と最後尾のオブジェクトがない場合
-	if (m_pTop[m_nPriority] == NULL && m_pCur[m_nPriority] == NULL)
+	if (m_pTop[nPriority] == NULL && m_pCur[nPriority] == NULL)
 	{
-		m_pTop[m_nPriority] = this;			// このオブジェクトを先頭且つ
-		m_pCur[m_nPriority] = this;			// 最後尾のオブジェクト
+		m_pTop[nPriority] = this;			// このオブジェクトを先頭且つ
+		m_pCur[nPriority] = this;			// 最後尾のオブジェクト
 		m_pPrev = NULL;
 		m_pNext = NULL;
 	}
 	else
 	{
-		m_pPrev = m_pCur[m_nPriority];		// "このオブジェクトの前は"最後尾のオブジェクト
-		m_pCur[m_nPriority]->m_pNext = this;	// 次のオブジェクトは"このオブジェクト"
-		m_pCur[m_nPriority] = this;			// 現在(最後尾)のオブジェクトは"このオブジェクト"
+		m_pPrev = m_pCur[nPriority];		// "このオブジェクトの前は"最後尾のオブジェクト
+		m_pCur[nPriority]->m_pNext = this;	// 次のオブジェクトは"このオブジェクト"
+		m_pCur[nPriority] = this;			// 現在(最後尾)のオブジェクトは"このオブジェクト"
 		m_pNext = NULL;						// 現在(最後尾)のオブジェクトには次のオブジェクトがないのでNULLにする
 	}
+
+	m_nPriority = nPriority;	// 描画の優先順位を設定
 	m_bDeath = false;			// 死亡フラグを立てない
 	m_objType = OBJTYPE::OBJTYPE_NONE;	// オブジェクトの種類を初期化
 
@@ -46,6 +46,7 @@ CScene::CScene(int nPriority)
 //=============================================================================
 CScene::~CScene()
 {
+#if 0
 	if (m_pTop[m_nPriority] != this && m_pCur[m_nPriority] != this)
 	{// このオブジェクトが先頭でも現在(最後尾)のオブジェクトでもない場合
 		m_pNext->m_pPrev = m_pNext;
@@ -69,6 +70,31 @@ CScene::~CScene()
 			m_pPrev->m_pNext = NULL;
 		}
 	}
+#else
+	if (m_pTop[m_nPriority] == this && m_pCur[m_nPriority] == this)
+	{
+		m_pTop[m_nPriority] = NULL;
+		m_pCur[m_nPriority] = NULL;
+		m_pNext = NULL;
+		m_pPrev = NULL;
+	}
+	else if (m_pTop[m_nPriority] == this)
+	{
+		m_pNext->m_pPrev = NULL;
+		m_pTop[m_nPriority] = m_pNext;
+	}
+	else if (m_pCur[m_nPriority] == this)
+	{
+		m_pPrev->m_pNext = NULL;
+		m_pCur[m_nPriority] = m_pPrev;
+	}
+	else
+	{
+		m_pPrev->m_pNext = m_pNext;
+		m_pNext->m_pPrev = m_pPrev;
+	}
+#endif
+
 }
 //=============================================================================
 // 全てのオブジェクトを開放
@@ -86,13 +112,9 @@ void CScene::ReleaseAll(void)
 			{// 現在のオブジェクトのポインタを保存する
 				CScene *pSceneNext = pScene->m_pNext;
 
-				// 現在のオブジェクトの死亡フラグを立てる
-				if (pScene->m_bDeath == true)
-				{// 死亡フラグが立っていたらオブジェクトを破棄
-					pScene->Uninit();
-					delete pScene;
-					pScene = NULL;
-				}
+				pScene->Uninit();
+				delete pScene;
+				pScene = NULL;
 				// オブジェクト情報を更新
 				pScene = pSceneNext;
 			}

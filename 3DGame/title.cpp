@@ -9,6 +9,7 @@
 //=============================================================================
 #include "title.h"
 #include "keyboard.h"
+#include "fade.h"
 //=============================================================================
 // 静的メンバ変数宣言
 //=============================================================================
@@ -48,7 +49,15 @@ void CTitle::Uninit(void)
 void CTitle::Update(void)
 {
 	// フェードの取得
-	//CFade *pFade = CManager::GetFade();
+	CFade *pFade = CManager::GetFade();
+
+	if (pFade->GetFade() == CFade::FADE_NONE)
+	{
+		if (CManager::GetInputKeyboard()->GetTrigger(DIK_SPACE) == true)
+		{
+			pFade->SetFade(CManager::MODE_GAME);
+		}
+	}
 
 }
 //=============================================================================

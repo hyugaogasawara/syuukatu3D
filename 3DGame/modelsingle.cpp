@@ -46,10 +46,9 @@ HRESULT CModelSingle::Init(void)
 	// オブジェクトの種類
 	SetObjType(OBJTYPE_MODEL);
 
-	// Xファイルの情報取得
-	m_pMesh = m_pXload->GetMesh(m_nModelType);
-	m_nNumMat = m_pXload->GetNumMat(m_nModelType);
-	m_pBuffMat = m_pXload->GetBuffMat(m_nModelType);
+	// Xファイルの読み込み
+	D3DXLoadMeshFromX("data/MODEL/target.x", D3DXMESH_SYSTEMMEM,
+		pDevice, NULL, &m_pBuffMat, NULL, &m_nNumMat, &m_pMesh);
 
 	// マテリアルデータへのポインタ
 	D3DXMATERIAL	*pMat;
@@ -161,7 +160,6 @@ HRESULT CModelSingle::Init(void)
 //=============================================================================
 void CModelSingle::Uninit(void)
 {
-
 	// マテリアルの破棄
 	if (m_pBuffMat != NULL)
 	{
@@ -176,15 +174,7 @@ void CModelSingle::Uninit(void)
 		m_pMesh = NULL;
 	}
 
-	// テクスチャの破棄
-	//for (int nCntTex = 0; nCntTex < MODEL_TEX; nCntTex++)
-	//{
-	//	if (m_pTexture[nCntTex] != NULL)
-	//	{
-	//		m_pTexture[nCntTex]->Release();
-	//		m_pTexture[nCntTex] = NULL;
-	//	}
-	//}
+	Release();
 }
 
 //=============================================================================
@@ -330,7 +320,7 @@ bool CModelSingle::Collision(void)
 			// 位置を取得
 			pos = pThisObj->GetPosition();
 
-			// 4頂点からモデルに向かって伸びるベクトルを算出
+			// 4頂点から対象に向かって伸びるベクトルを算出
 			D3DXVECTOR3 vec[MODEL_SURFACE_VTX];
 			vec[0] = m_aSaveMtxWorld[0] - pos;
 			vec[1] = m_aSaveMtxWorld[1] - pos;
@@ -345,15 +335,14 @@ bool CModelSingle::Collision(void)
 			vec2[3] = m_aSaveMtxWorld[0] - m_aSaveMtxWorld[2];
 
 			// 外積を求める
-			float vecCross[MODEL_SURFACE_VTX];
-			vecCross[0] = (vec[0].x * vec2[0].y) - (vec2[0].x * vec[0].y);
-			vecCross[1] = (vec[1].x * vec2[1].y) - (vec2[1].x * vec[1].y);
-			vecCross[2] = (vec[3].x * vec2[2].y) - (vec2[2].x * vec[3].y);
-			vecCross[3] = (vec[2].x * vec2[3].y) - (vec2[3].x * vec[2].y);
-
+			float fVecCross[MODEL_SURFACE_VTX];
+			fVecCross[0] = (vec[0].x * vec2[0].y) - (vec2[0].x * vec[0].y);
+			fVecCross[1] = (vec[1].x * vec2[1].y) - (vec2[1].x * vec[1].y);
+			fVecCross[2] = (vec[3].x * vec2[2].y) - (vec2[2].x * vec[3].y);
+			fVecCross[3] = (vec[2].x * vec2[3].y) - (vec2[3].x * vec[2].y);
 
 			// 範囲内の判定
-			if (vecCross[0] < 0.0f && vecCross[1] < 0.0f && vecCross[2] < 0.0f && vecCross[3] < 0.0f)
+			if (fVecCross[0] < 0.0f && fVecCross[1] < 0.0f && fVecCross[2] < 0.0f && fVecCross[3] < 0.0f)
 			{
 				// 法線を求める
 				D3DXVECTOR3 Normal;
@@ -376,9 +365,9 @@ bool CModelSingle::Collision(void)
 				if (fVecDot < 0.0f)
 				{
 					// 当たり判定
-					//CBullet *pBullet;
-					//pBullet = (CBullet*)pThisObj;
-					//pBullet->SetUninit(true);
+					CBullet *pBullet;
+					pBullet = (CBullet*)pThisObj;
+					pBullet->SetUninit(true);
 					this->Uninit();
 					return true;
 				}

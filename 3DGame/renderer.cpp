@@ -164,7 +164,6 @@ void CRenderer::Update(void)
 //=============================================================================
 void CRenderer::Draw(void)
 {
-	
 	CCamera *pCamera = CManager::GetCamera();
 
 	// バックバッファ＆Ｚバッファのクリア
@@ -178,7 +177,10 @@ void CRenderer::Draw(void)
 	{
 		if (CManager::GetMode() == CManager::MODE_GAME)
 		{
-			pCamera->SetCamera();
+			if (pCamera)	// nullチェック
+			{
+				pCamera->SetCamera();
+			}
 		}
 
 		// 全てのオブジェクトの描画処理
