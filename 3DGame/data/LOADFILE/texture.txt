@@ -9,7 +9,7 @@ SCRIPT
 //-----------------------------------------------------------------------------
 // テクスチャの総数
 //-----------------------------------------------------------------------------
-NUM_TEXTURE = 7
+NUM_TEXTURE = 8
 
 //-----------------------------------------------------------------------------
 // テクスチャの種類
@@ -21,5 +21,6 @@ TEXTURE_FILENAME = data/TEXTURE/effect000.jpg		#[3] エフェクト
 TEXTURE_FILENAME = data/TEXTURE/sight.png			#[4] 照準
 TEXTURE_FILENAME = data/TEXTURE/grass.jpg			#[5] 草
 TEXTURE_FILENAME = data/TEXTURE/number000.png		#[6] 数字
+TEXTURE_FILENAME = data/TEXTURE/flame.png			#[7] 白枠
 
 END_SCRIPT

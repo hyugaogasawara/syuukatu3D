@@ -320,8 +320,6 @@ void CManager::Draw(void)
 				m_pCamera->SetCamera();
 			}
 		}
-
-
 	}
 
 }

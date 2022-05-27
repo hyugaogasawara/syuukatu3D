@@ -80,7 +80,7 @@ HRESULT CTexture::Init(void)
 void CTexture::Uninit(void)
 {
 	// テクスチャの種類数破棄
-	for (int nCntTex = 0; nCntTex < m_nType; nCntTex++)
+	for (int nCntTex = 0; nCntTex < m_nNumTexture; nCntTex++)
 	{
 		if (m_apTexture[nCntTex] != NULL)
 		{

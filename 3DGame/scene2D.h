@@ -62,8 +62,8 @@ public:
 	void SetColor(D3DCOLORVALUE colval);										// 頂点カラー
 	void SetColor(D3DXCOLOR color);				
 	void SetScrollTex(float fTexU, float fTexV);								// テクスチャスクロール
-	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; CScene::SetPosition(pos); }// 位置
-	void SetSize(D3DXVECTOR3 size) { m_size = size; CScene::SetSize(size); }	// 大きさ
+	void SetPosition(D3DXVECTOR3 pos) { m_pos = pos; }// 位置
+	void SetSize(D3DXVECTOR3 size) { m_size = size; }	// 大きさ
 	void SetNumber(int nNum);
 
 private:

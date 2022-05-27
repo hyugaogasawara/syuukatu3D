@@ -76,6 +76,7 @@ void CCamera::Update(void)
 	//GamePadXControl(pXinputPad);		// ゲームパッド操作
 
 	// プレイヤー情報取得
+#if 0
 	CPlayer *pPlayer = CGame::GetPlayer();
 
 	if (pPlayer != NULL)
@@ -90,6 +91,7 @@ void CCamera::Update(void)
 		//m_posR.z += posR.z;
 		//m_posV.z += posV.z;
 	}
+#endif
 	//m_posV.y = VIEW_Y;	// 視点
 	//m_posR.y = GAZE_Y;	// 注視点
 
@@ -282,9 +284,9 @@ void CCamera::MouseControl(CMouse *pMouse)
 		SetCursorPos(m_Cursol.x, m_Cursol.y);
 
 		m_rot.y += pMouse->GetMousePos().lX * 0.01f;
-		if (m_rot.y > D3DX_PI)
+		if (m_rot.y > D3DX_PI / 4)
 		{
-			m_rot.y = -D3DX_PI;
+			m_rot.y = -D3DX_PI / 4;
 		}
 		m_posV.y += pMouse->GetMousePos().lY * -0.1f;
 		m_posV.x = m_posR.x - sinf(m_rot.y) * m_fViewDepth;
@@ -301,9 +303,9 @@ void CCamera::MouseControl(CMouse *pMouse)
 		SetCursorPos(m_Cursol.x, m_Cursol.y);
 
 		m_rot.y -= pMouse->GetMousePos().lX * 0.001f;
-		if (m_rot.y > D3DX_PI)
+		if (m_rot.y > D3DX_PI / 4)
 		{
-			m_rot.y = -D3DX_PI;
+			m_rot.y = -D3DX_PI / 4;
 		}
 		m_posR.y += pMouse->GetMousePos().lY * -0.1f;
 		m_posR.x = m_posV.x + sinf(m_rot.y) * m_fViewDepth;
