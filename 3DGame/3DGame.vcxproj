@@ -173,14 +173,18 @@
     <ClCompile Include="modelsingle.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="polygon.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scene2D.cpp" />
     <ClCompile Include="scene3D.cpp" />
+    <ClCompile Include="score.cpp" />
+    <ClCompile Include="select.cpp" />
     <ClCompile Include="sight.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Xload.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -204,14 +208,18 @@
     <ClInclude Include="modelsingle.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="polygon.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene2D.h" />
     <ClInclude Include="scene3D.h" />
+    <ClInclude Include="score.h" />
+    <ClInclude Include="select.h" />
     <ClInclude Include="sight.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Xload.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -68,4 +68,22 @@ HRESULT CXload::Init(void)
 //=============================================================================
 void CXload::Uninit(void)
 {
+	// マテリアルの破棄
+	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
+	{
+		if (m_pBuffMat[nCnt] != NULL)
+		{
+			m_pBuffMat[nCnt]->Release();
+			m_pBuffMat[nCnt] = NULL;
+		}
+	}
+	// メッシュの破棄
+	for (int nCnt = 0; nCnt < MAX_MODEL; nCnt++)
+	{
+		if (m_pMesh[nCnt] != NULL)
+		{
+			m_pMesh[nCnt]->Release();
+			m_pMesh[nCnt] = NULL;
+		}
+	}
 }

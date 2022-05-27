@@ -100,14 +100,6 @@ void CPlayer::Update(void)
 	CScene::SetPosOld(m_posOld);
 	CScene::SetPosition(m_pos);
 	CScene::SetSize(m_size);
-
-	CModelSingle *pModelSingle = CGame::GetModelSingle();
-
-	if (pModelSingle->Collision() == true)
-	{
-
-	}
-
 }
 
 //=============================================================================
@@ -145,7 +137,7 @@ void CPlayer::Draw(void)
 	}
 }
 //=============================================================================
-// ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨
+// ê∂ê¨èàóù
 //=============================================================================
 CPlayer *CPlayer::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {

@@ -28,7 +28,7 @@ class CBullet;
 class CSight : public CBillboard
 {
 public:
-	CSight(int nPriority = PRIORITY_MODEL);	// デフォルトコンストラクタ
+	CSight(int nPriority = PRIORITY_MODEL);	// コンストラクタ
 	~CSight();			// デストラクタ
 
 	HRESULT Init(void);	// 初期化処理
@@ -36,19 +36,20 @@ public:
 	void Update(void);	// 更新処理
 	void Draw(void);	// 描画処理
 
+	// 生成処理
 	static CSight *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nType);
 
 private:
-	void Move(void);
+	void Move(void);	// 移動処理
 
 	D3DXVECTOR3	m_pos;		// 位置
 	D3DXVECTOR3	m_rot;		// 向き
 	D3DXVECTOR3	m_size;		// 大きさ
 	D3DXVECTOR3	m_move;		// 移動量
 	int			m_nLife;	// 寿命
-	bool		m_bUninit;
-	CBullet		*m_pBullet;
-	CInputKeyboard *m_pKeyboard;
-	CMouse			*m_pMouse;
+	bool		m_bUninit;	// 破棄
+	CBullet		*m_pBullet;	// 弾クラスのポインタ
+	CInputKeyboard *m_pKeyboard;	// キーボードクラスのポインタ
+	CMouse			*m_pMouse;		// マウスクラスのポインタ
 };
 #endif //!_SIGHT_H_

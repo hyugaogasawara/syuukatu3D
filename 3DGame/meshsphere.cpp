@@ -89,7 +89,7 @@ HRESULT CMeshSphere::Init(void)
 			pVtx[nCntVtx].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 
 			// テクスチャ座標			テクスチャの分割 / 横の分割数, 1.0f / 縦の分割数
-			pVtx[nCntVtx].tex = D3DXVECTOR2((0.2f / m_nLine * nLine), (1.0f / m_nVertical * nVertical));
+			pVtx[nCntVtx].tex = D3DXVECTOR2((0.2f / m_nLine * nLine), (2.0f / m_nVertical * nVertical));
 		}
 	}
 

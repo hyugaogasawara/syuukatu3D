@@ -9,8 +9,6 @@
 //*****************************************************************************
 #include "renderer.h"
 #include "scene.h"
-#include "camera.h"
-#include "game.h"
 //=============================================================================
 // デフォルトコンストラクタ
 //=============================================================================
@@ -164,8 +162,6 @@ void CRenderer::Update(void)
 //=============================================================================
 void CRenderer::Draw(void)
 {
-	CCamera *pCamera = CManager::GetCamera();
-
 	// バックバッファ＆Ｚバッファのクリア
 	m_pD3DDevice->Clear(0,
 		NULL,
@@ -175,14 +171,6 @@ void CRenderer::Draw(void)
 	// Direct3Dによる描画の開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
 	{
-		if (CManager::GetMode() == CManager::MODE_GAME)
-		{
-			if (pCamera)	// nullチェック
-			{
-				pCamera->SetCamera();
-			}
-		}
-
 		// 全てのオブジェクトの描画処理
 		CScene::DrawAll();
 

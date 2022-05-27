@@ -67,17 +67,19 @@ void CTitle::Draw(void)
 {
 }
 //=============================================================================
-// ƒQ[ƒ€‰æ–Ê‚Ì¶¬
+// ¶¬ˆ—
 //=============================================================================
 CTitle *CTitle::Create(void)
 {
-	CTitle *pTitle;
-	pTitle = new CTitle;
-
-	if (pTitle != NULL)
+	CTitle *pTitle = nullptr;
+	if (pTitle == nullptr)
 	{
-		pTitle->Init();
-	}
+		pTitle = new CTitle;
 
+		if (pTitle != NULL)
+		{
+			pTitle->Init();
+		}
+	}
 	return pTitle;
 }

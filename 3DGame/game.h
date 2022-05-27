@@ -23,6 +23,8 @@ class CMeshSphere;
 class CMeshField;
 class CModelSingle;
 class CSight;
+class CScore;
+
 //*****************************************************************************
 //	ゲームクラス
 //*****************************************************************************
@@ -41,15 +43,16 @@ public:
 	static CGame *Create(void);
 
 	// 取得処理
-	static CPlayer *GetPlayer(void) { return m_pPlayer; }
-	static CSight *GetSight(void) { return m_pSight; }
-	static CModelSingle *GetModelSingle(void) { return m_pModelSingle; }
-
+	static CPlayer *GetPlayer(void) { return m_pPlayer; }	// プレイヤー
+	static CSight *GetSight(void) { return m_pSight; }		// 照準
+	static CModelSingle *GetModelSingle(void) { return m_pModelSingle; }	// モデル単体
+	static CScore *GetScore(void) { return m_pScore; }
 private:
-	static CPlayer *m_pPlayer;
-	static CMeshSphere *m_pMeshSphere;
-	static CMeshField *m_pMeshField;
-	static CModelSingle *m_pModelSingle;
-	static CSight *m_pSight;
+	static CPlayer		*m_pPlayer;		// プレイヤー
+	static CMeshSphere	*m_pMeshSphere;	// メッシュスフィア
+	static CMeshField	*m_pMeshField;	// メッシュフィールド
+	static CModelSingle *m_pModelSingle;// モデル単体
+	static CSight		*m_pSight;		// 照準
+	static CScore		*m_pScore;
 };
 #endif //!_GAME_H_

@@ -90,7 +90,7 @@ void CSight::Update(void)
 	{
 		// íeÇê∂ê¨
 		//CEffect::Create(m_pos.x, m_pos.y, -20.0f, D3DXVECTOR3(3.5f, 3.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 5.0f), D3DXCOLOR(255, 255, 255, 255), D3DXCOLOR(0, 0, 0, 0), 120, 3);
-		m_pBullet = CBullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, -20.0f), D3DXVECTOR3(3.5f, 3.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 5.0f), 120, 1);
+		m_pBullet = CBullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, -60.0f), D3DXVECTOR3(3.5f, 3.5f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 5.0f), 120, 1);
 
 	}
 
@@ -128,7 +128,7 @@ void CSight::Draw(void)
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 //=============================================================================
-// è∆èÄÇÃê∂ê¨
+// ê∂ê¨èàóù
 //=============================================================================
 CSight *CSight::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nType)
 {

@@ -15,9 +15,9 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_VTX 8			// 頂点
-#define MODEL_SURFACE_VTX 4 // 面の頂点
-#define MODEL_TEX 5
+#define MODEL_VTX			8	// 頂点
+#define MODEL_SURFACE_VTX	4	// 面の頂点
+#define MODEL_TEX			5
 //*****************************************************************************
 // 前方宣言
 //*****************************************************************************
@@ -51,7 +51,8 @@ public:
 	void SetRotation(D3DXVECTOR3 rot) { m_rot = rot; }		// パーツの向き
 	void SetModelType(int nType) { m_nModelType = nType; }	// モデルの種類
 
-	bool Collision(void);	// 当たり判定
+	// 当たり判定
+	bool Collision(void);
 private:
 	LPDIRECT3DTEXTURE9	m_pTexture[MODEL_TEX];	// テクスチャのポインタ
 	LPD3DXMESH			m_pMesh;				// メッシュ（頂点情報）へのポインタ
@@ -66,8 +67,8 @@ private:
 	D3DXVECTOR3			m_vtx[MODEL_VTX];		// 頂点のローカル座標
 	D3DXMATRIX			m_aMtxWorld[MODEL_VTX];	// 8頂点分のワールドマトリックス
 	D3DXVECTOR3			m_aSaveMtxWorld[MODEL_VTX];	// 頂点のワールドマトリックス保存
-	CXload				*m_pXload;				// Xファイルの情報
-	int					m_nModelType;			// モデルの種類
+	CXload				*m_pXload;					// Xファイルの情報
+	int					m_nModelType;				// モデルの種類
 
 };
 #endif //!_MODELSINGLE_H_

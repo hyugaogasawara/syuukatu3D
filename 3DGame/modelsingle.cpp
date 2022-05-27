@@ -11,6 +11,7 @@
 #include "Xload.h"
 #include "game.h"
 #include "bullet.h"
+#include "score.h"
 //=============================================================================
 // デフォルトコンストラクタ
 //=============================================================================
@@ -46,9 +47,14 @@ HRESULT CModelSingle::Init(void)
 	// オブジェクトの種類
 	SetObjType(OBJTYPE_MODEL);
 
+	// Xファイルのデータを取得
+	m_pBuffMat = m_pXload->GetBuffMat(m_nModelType);
+	m_nNumMat = m_pXload->GetNumMat(m_nModelType);
+	m_pMesh = m_pXload->GetMesh(m_nModelType);
+
 	// Xファイルの読み込み
-	D3DXLoadMeshFromX("data/MODEL/target.x", D3DXMESH_SYSTEMMEM,
-		pDevice, NULL, &m_pBuffMat, NULL, &m_nNumMat, &m_pMesh);
+	//D3DXLoadMeshFromX("data/MODEL/target.x", D3DXMESH_SYSTEMMEM,
+	//	pDevice, NULL, &m_pBuffMat, NULL, &m_nNumMat, &m_pMesh);
 
 	// マテリアルデータへのポインタ
 	D3DXMATERIAL	*pMat;
@@ -160,20 +166,7 @@ HRESULT CModelSingle::Init(void)
 //=============================================================================
 void CModelSingle::Uninit(void)
 {
-	// マテリアルの破棄
-	if (m_pBuffMat != NULL)
-	{
-		m_pBuffMat->Release();
-		m_pBuffMat = NULL;
-	}
-
-	// メッシュの破棄
-	if (m_pMesh != NULL)
-	{
-		m_pMesh->Release();
-		m_pMesh = NULL;
-	}
-
+	// オブジェクトの開放
 	Release();
 }
 
@@ -182,7 +175,11 @@ void CModelSingle::Uninit(void)
 //=============================================================================
 void CModelSingle::Update(void)
 {
-	CModelSingle::Collision();
+	if (m_nModelType == 0)
+	{
+		// 当たり判定
+		CModelSingle::Collision();
+	}
 }
 
 //=============================================================================
@@ -275,7 +272,7 @@ void CModelSingle::Draw(void)
 	}
 }
 //=============================================================================
-// モデルの生成
+// 生成処理
 //=============================================================================
 CModelSingle *CModelSingle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType)
 {
@@ -327,7 +324,7 @@ bool CModelSingle::Collision(void)
 			vec[2] = m_aSaveMtxWorld[2] - pos;
 			vec[3] = m_aSaveMtxWorld[3] - pos;
 
-			// 辺のベクトルを算出
+			// 右回りのベクトルを算出
 			D3DXVECTOR3 vec2[MODEL_SURFACE_VTX];
 			vec2[0] = m_aSaveMtxWorld[1] - m_aSaveMtxWorld[0];
 			vec2[1] = m_aSaveMtxWorld[3] - m_aSaveMtxWorld[1];
@@ -364,6 +361,9 @@ bool CModelSingle::Collision(void)
 				// 求めた値が鋭角(90 ～ 180°)の場合はマイナス
 				if (fVecDot < 0.0f)
 				{
+					CScore *pScore = CGame::GetScore();
+					pScore->AddScore(100);
+
 					// 当たり判定
 					CBullet *pBullet;
 					pBullet = (CBullet*)pThisObj;

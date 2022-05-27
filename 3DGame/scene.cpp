@@ -36,8 +36,8 @@ CScene::CScene(int nPriority)
 		m_pNext = NULL;						// 現在(最後尾)のオブジェクトには次のオブジェクトがないのでNULLにする
 	}
 
-	m_nPriority = nPriority;	// 描画の優先順位を設定
-	m_bDeath = false;			// 死亡フラグを立てない
+	m_nPriority = nPriority;			// 描画の優先順位を設定
+	m_bDeath = false;					// 死亡フラグを立てない
 	m_objType = OBJTYPE::OBJTYPE_NONE;	// オブジェクトの種類を初期化
 
 }
@@ -115,6 +115,7 @@ void CScene::ReleaseAll(void)
 				pScene->Uninit();
 				delete pScene;
 				pScene = NULL;
+
 				// オブジェクト情報を更新
 				pScene = pSceneNext;
 			}

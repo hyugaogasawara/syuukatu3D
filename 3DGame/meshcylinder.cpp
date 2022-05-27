@@ -75,16 +75,6 @@ HRESULT CMeshCylinder::Init(void)
 	{	// 側の分割数
 		for (int nSide = 0; nSide < m_nSide + 1; nSide++, nCntVtx++)
 		{
-			//// 頂点座標の角度を算出
-			//float fPhi = (D3DX_PI * 2) / m_nVertical * nVertical;
-			//float ftheta = (D3DX_PI * 2) / m_nVertical * nSide;
-
-			//// 頂点座標の設定
-			//pVtx[nCntVtx].pos = D3DXVECTOR3(
-			//	m_fRadius * sinf(ftheta) * cosf(fPhi),
-			//	m_fRadius * sinf(ftheta + D3DX_PI / 2),
-			//	m_fRadius * sinf(ftheta) * sinf(fPhi));
-
 			// 頂点座標の設定
 			pVtx[nCntVtx].pos = D3DXVECTOR3(
 				(-m_size.x / 2) * cosf(fAngle - fAddAngle),
@@ -210,7 +200,7 @@ void CMeshCylinder::Draw(void)
 
 }
 //=============================================================================
-// プレイヤーの生成
+// 生成処理
 //=============================================================================
 CMeshCylinder *CMeshCylinder::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size, int nVertical, int nSide, int nType, float fRotateSpeed)
 {

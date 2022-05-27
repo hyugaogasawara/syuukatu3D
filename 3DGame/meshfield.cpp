@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// メッシュフィールドクラス [meshfield.h]
+// メッシュフィールドクラス [meshfield.cpp]
 // Author : 小笠原　彪我
 //
 //=============================================================================
@@ -63,7 +63,6 @@ HRESULT CMeshField::Init(void)
 	pVtx[3].pos = D3DXVECTOR3(m_pos.x - m_size.x, m_pos.y, m_pos.z);
 	pVtx[4].pos = D3DXVECTOR3(m_pos.x,			  m_pos.y, m_pos.z);
 	pVtx[5].pos = D3DXVECTOR3(m_pos.x + m_size.x, m_pos.y, m_pos.z);
-
 	pVtx[6].pos = D3DXVECTOR3(m_pos.x - m_size.x, m_pos.y, m_pos.z - m_size.z);
 	pVtx[7].pos = D3DXVECTOR3(m_pos.x,			  m_pos.y, m_pos.z - m_size.z);
 	pVtx[8].pos = D3DXVECTOR3(m_pos.x + m_size.x, m_pos.y, m_pos.z - m_size.z);
@@ -213,14 +212,14 @@ void CMeshField::Draw(void)
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, (m_nWidth + 1) * (m_nDepth + 1), 0, 12);
 }
 //=============================================================================
-// プレイヤーの生成
+// 生成処理
 //=============================================================================
 CMeshField *CMeshField::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nWidth, int nDepth, int nType)
 {
 	CMeshField *pMeshField;
 	pMeshField = new CMeshField;
 
-	if (pMeshField != NULL)
+	if (pMeshField)
 	{
 		pMeshField->m_pos = pos;
 		pMeshField->m_size = size;

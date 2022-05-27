@@ -17,7 +17,7 @@
 #include "title.h"
 //#include "menu.h"
 //#include "tutorial.h"
-//#include "select.h"
+#include "select.h"
 #include "game.h"
 //#include "result.h"
 #include "fade.h"
@@ -56,7 +56,7 @@ CXload			*CManager::m_pXload = NULL;
 CLoadData		*CManager::m_pLoadData = NULL;
 CCamera			*CManager::m_pCamera = NULL;
 CLight			*CManager::m_apLight[MAX_LIGHT] = {};
-CManager::MODE	CManager::m_mode = MODE_TITLE;
+CManager::MODE	CManager::m_mode = MODE_GAME;
 
 //=============================================================================
 // デフォルトコンストラクタ
@@ -311,6 +311,17 @@ void CManager::Draw(void)
 	if (m_pRenderer != NULL)
 	{
 		m_pRenderer->Draw();	
+
+		// カメラの設定
+		if (CManager::GetMode() == CManager::MODE_GAME)
+		{
+			if (m_pCamera)	// nullチェック
+			{
+				m_pCamera->SetCamera();
+			}
+		}
+
+
 	}
 
 }
@@ -343,11 +354,11 @@ void CManager::SetMode(CManager::MODE mode)
 		//}
 		break;
 	case MODE_SELECT:
-		//if (m_pSelect != NULL)
-		//{
-		//	m_pSelect->Uninit();
-		//	m_pSelect = NULL;
-		//}
+		if (m_pSelect != NULL)
+		{
+			m_pSelect->Uninit();
+			m_pSelect = NULL;
+		}
 		break;
 	case MODE_GAME:
 		if (m_pGame != NULL)
@@ -394,7 +405,7 @@ void CManager::SetMode(CManager::MODE mode)
 		//m_pTutorial = CTutorial::Create();
 		break;
 	case MODE_SELECT:
-		//m_pSelect = CSelect::Create();
+		m_pSelect = CSelect::Create();
 		break;
 	case MODE_GAME:
 		// カメラの生成
@@ -405,7 +416,7 @@ void CManager::SetMode(CManager::MODE mode)
 		// ライティングの生成
 		m_apLight[0] = CLight::Create(D3DXVECTOR3(0.2f, -0.8f, 0.4f), D3DXVECTOR3(400.0f, 800.0f, -400.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_apLight[1] = CLight::Create(D3DXVECTOR3(-0.2f, 0.8f, -0.4f), D3DXVECTOR3(-100.0f, 0.0f, 100.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 1);
-		m_apLight[2] = CLight::Create(D3DXVECTOR3(0.9f, -0.1f, 0.4f), D3DXVECTOR3(100.0f, 0.0f, -200.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 2);
+		m_apLight[2] = CLight::Create(D3DXVECTOR3(0.4f, -0.1f, 0.4f), D3DXVECTOR3(100.0f, 0.0f, -200.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 2);
 
 		if (!m_pGame)
 		{
