@@ -113,6 +113,7 @@ void CGame::Update(void)
 	//	CEffect::Create(50.0f, 50.0f, 50.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(255, 255, 255, 255), D3DXCOLOR(0, 0, 0, 0), 120, 3);
 	//}
 
+	// フレームカウント
 	m_nCntFrame++;
 
 	if (m_nCntFrame == 1800)
@@ -122,6 +123,7 @@ void CGame::Update(void)
 			m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-90.0f + (40 * nCnt), 100.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
 			m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-90.0f + (40 * nCnt), 125.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
 		}
+		// カウントリセット
 		m_nCntFrame = 0;
 	}
 

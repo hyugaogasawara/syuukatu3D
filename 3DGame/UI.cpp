@@ -26,7 +26,7 @@ CUI::CUI(int nPriority) : CScene2D(nPriority)
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 位置
 	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 大きさ
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	// 移動量
-	m_nType = 0;	// テクスチャの種類
+	m_nType = 0;		// テクスチャの種類
 }
 //=============================================================================
 // デストラクタ
@@ -64,12 +64,11 @@ void CUI::Uninit(void)
 //=============================================================================
 void CUI::Update(void)
 {
-
+	m_pos = CScene2D::GetPosition();
+	m_size = CScene2D::GetSize();
 
 
 	// 位置と大きさを設定
-	CScene2D::SetPosition(m_pos);
-	CScene2D::SetSize(m_size);
 	CScene2D::Update();
 }
 
@@ -94,11 +93,12 @@ CUI *CUI::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXVECTOR3 move, int nType)
 
 		if (pUI != nullptr)
 		{
-			pUI->SetPosition(pos);	// 位置
-			pUI->SetSize(size);		// 大きさ
+			pUI->m_pos = pos;		// 位置
+			pUI->m_size = size;		// 大きさ
 			pUI->m_move = move;		// 移動量
 			pUI->BindTexture(nType);// テクスチャの種類
 			pUI->Init();			// 初期化処理
+
 		}
 	}
 	return pUI;
