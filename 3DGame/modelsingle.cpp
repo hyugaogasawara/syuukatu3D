@@ -301,7 +301,7 @@ bool CModelSingle::Collision(void)
 	CScene *pSaveObj = nullptr;
 
 	// 先頭オブジェクトの優先順位を取得
-	pThisObj = pThisObj->GetTopObj(PRIORITY_BULLET);
+	pThisObj = pThisObj->GetTopObj(PRIORITY_SIGHT);
 
 	while (pThisObj)
 	{
@@ -359,16 +359,17 @@ bool CModelSingle::Collision(void)
 				fVecDot = -D3DXVec3Dot(&Normal, &vec[0]);
 
 				// 求めた値が鋭角(90 ～ 180°)の場合はマイナス
-				if (fVecDot < 0.0f)
+				if (fVecDot < D3DX_PI || fVecDot < 0.0f)
 				{
-					CScore *pScore = CGame::GetScore();
-					pScore->AddScore(100);
-
 					// 当たり判定
 					CBullet *pBullet;
 					pBullet = (CBullet*)pThisObj;
 					pBullet->SetUninit(true);
 					this->Uninit();
+
+					// スコア加算
+					CScore *pScore = CGame::GetScore();
+					pScore->AddScore(100);
 					return true;
 				}
 			}

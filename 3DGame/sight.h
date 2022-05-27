@@ -12,10 +12,11 @@
 //*****************************************************************************
 #include "manager.h"
 #include "billboard.h"
+
 //*****************************************************************************
 //	マクロ定義
 //*****************************************************************************
-#define SPEED 3.0f
+#define SPEED 2.5f
 //*****************************************************************************
 //	前方宣言
 //*****************************************************************************
@@ -28,7 +29,7 @@ class CBullet;
 class CSight : public CBillboard
 {
 public:
-	CSight(int nPriority = PRIORITY_MODEL);	// コンストラクタ
+	CSight(int nPriority = PRIORITY_SIGHT);	// コンストラクタ
 	~CSight();			// デストラクタ
 
 	HRESULT Init(void);	// 初期化処理
@@ -49,7 +50,7 @@ private:
 	int			m_nLife;	// 寿命
 	bool		m_bUninit;	// 破棄
 	CBullet		*m_pBullet;	// 弾クラスのポインタ
-	CInputKeyboard *m_pKeyboard;	// キーボードクラスのポインタ
+	CInputKeyboard	*m_pKeyboard;	// キーボードクラスのポインタ
 	CMouse			*m_pMouse;		// マウスクラスのポインタ
 };
 #endif //!_SIGHT_H_

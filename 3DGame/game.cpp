@@ -64,18 +64,18 @@ HRESULT CGame::Init(void)
 	// プレイヤー
 	//m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, -150.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
 
-	// 的
 	for (int nCnt = 0; nCnt < 5; nCnt++)
 	{
-		m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-105.0f + (50 * nCnt) , 100.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
+		m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-105.0f + (50 * nCnt), 100.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
+		m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-105.0f + (50 * nCnt), 125.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
 	}
 
-
-
 	// 照準
-	m_pSight = CSight::Create(D3DXVECTOR3(0.0f , 100.0f, -60.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 4);
+	m_pSight = CSight::Create(D3DXVECTOR3(0.0f , 100.0f, -80.0f), D3DXVECTOR3(10.0f, 10.0f, 0.0f), 4);
 
-	m_pScore = CScore::Create(D3DXVECTOR3(950.0f, 100.0f, 0.0f));
+	// スコア
+	m_pScore = CScore::Create(D3DXVECTOR3(950.0f, 70.0f, 0.0f));
+
 	return S_OK;
 }
 //=============================================================================
@@ -107,6 +107,20 @@ void CGame::Update(void)
 	//{
 	//	CEffect::Create(50.0f, 50.0f, 50.0f, D3DXVECTOR3(5.0f, 5.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXCOLOR(255, 255, 255, 255), D3DXCOLOR(0, 0, 0, 0), 120, 3);
 	//}
+
+	// 的
+
+	m_nCntFrame++;
+
+	if (m_nCntFrame == 1600)
+	{
+		for (int nCnt = 0; nCnt < 5; nCnt++)
+		{
+			m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-105.0f + (50 * nCnt), 100.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
+			m_pModelSingle = CModelSingle::Create(D3DXVECTOR3(-105.0f + (50 * nCnt), 125.0f, -50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2, 0.0f), 0);
+		}
+		m_nCntFrame = 0;
+	}
 
 }
 //=============================================================================

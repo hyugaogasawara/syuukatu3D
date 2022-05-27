@@ -54,5 +54,7 @@ private:
 	static CModelSingle *m_pModelSingle;// ƒ‚ƒfƒ‹’P‘Ì
 	static CSight		*m_pSight;		// Æ€
 	static CScore		*m_pScore;
+	int m_nCntFrame;
+
 };
 #endif //!_GAME_H_

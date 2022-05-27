@@ -19,7 +19,7 @@
 class CBullet : public CBillboard
 {
 public:
-	CBullet(int nPriority = PRIORITY_BULLET);	// デフォルトコンストラクタ
+	CBullet(int nPriority = PRIORITY_SIGHT);	// デフォルトコンストラクタ
 	~CBullet();			// デストラクタ
 
 	HRESULT Init(void);	// 初期化処理

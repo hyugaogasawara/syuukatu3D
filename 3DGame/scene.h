@@ -43,6 +43,7 @@ public:
 		PRIORITY_PLAYER,	// プレイヤー
 		PRIORITY_BULLET,	// 弾
 		PRIORITY_EFFECT,	// エフェクト
+		PRIORITY_SIGHT,		// 照準
 		PRIORITY_UI,		// UI
 		PRIORITY_FADE,		// フェード
 		PRIORITY_MAX		// 最大数

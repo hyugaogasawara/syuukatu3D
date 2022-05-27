@@ -17,8 +17,8 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define WIDTH_MOVE_LIMIT	170	// 移動幅制限
-#define UP_MOVE_LIMIT		190	// 上移動制限
+#define WIDTH_MOVE_LIMIT	120	// 移動幅制限
+#define UP_MOVE_LIMIT		170	// 上移動制限
 #define DOWN_MOVE_LIMIT		70	// 下移動制限
 //=============================================================================
 // 静的メンバ変数宣言
@@ -86,6 +86,7 @@ void CSight::Update(void)
 	// 移動処理
 	Move();
 
+	// マウス左ボタン
 	if (m_pMouse->GetTrigger(CMouse::DIM_L) == true)
 	{
 		// 弾を生成
@@ -153,6 +154,7 @@ CSight *CSight::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nType)
 //=============================================================================
 void CSight::Move(void)
 {
+	// 移動速度
 	float fSpeed = SPEED;
 	
 	// 上
