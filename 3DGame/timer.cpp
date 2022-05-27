@@ -9,7 +9,7 @@
 //=============================================================================
 #include "timer.h"
 #include "polygon.h"
-
+#include "fade.h"
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -95,9 +95,12 @@ void CTimer::Update(void)
 		m_nTimer--;		// カウントダウン
 		m_nFrame = 0;	// フレーム数リセット
 
-		if (m_nTimer <= 0)
+		CFade *pFade = CManager::GetFade();
+		if (m_nTimer <= 0 && pFade->GetFade() == CFade::FADE_NONE)
 		{
 			m_nTimer = 0;
+
+			pFade->SetFade(CManager::MODE_SELECT);
 		}
 	}
 }

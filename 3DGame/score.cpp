@@ -45,17 +45,19 @@ HRESULT CScore::Init(void)
 //=============================================================================
 void CScore::Uninit(void)
 {
-	//FILE *pFile;
-	//pFile = fopen("data/SAVEDATA/currentscore.txt", "w");
-	//if (pFile != NULL)
-	//{
-	//	fprintf(pFile, "%d", m_nScore);
-	//}
-	//else
-	//{
-	//	printf("ファイルが開けませんでした\n");
-	//}
-	//fclose(pFile);
+	FILE *pFile;
+
+	// データ保存
+	pFile = fopen("data/SAVEDATA/score.txt", "w");
+	if (pFile != NULL)
+	{
+		fprintf(pFile, "%d", m_nScore);
+	}
+	else
+	{
+		printf("ファイルが開けませんでした\n");
+	}
+	fclose(pFile);
 
 
 	// 桁数分破棄
